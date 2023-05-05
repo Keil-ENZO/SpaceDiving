@@ -21,7 +21,7 @@ export default class Player {
 
   draw(ctx) {
     if (this.shootPressed) {
-      this.bulletController.shoot(this.x + this.width / 2, this.y, 4, 10);
+      this.bulletController.shoot(this.x + this.width / 2, this.y, 4, 20);
     }
     this.move();
     this.collideWithWalls();
@@ -51,11 +51,10 @@ export default class Player {
   keydown = (event) => {
     if (event.code == "ArrowRight") {
       this.rightPressed = true;
+      this.shootPressed = true;
     }
     if (event.code == "ArrowLeft") {
       this.leftPressed = true;
-    }
-    if (event.code == "Space") {
       this.shootPressed = true;
     }
   };
@@ -63,12 +62,11 @@ export default class Player {
   keyup = (event) => {
     if (event.code == "ArrowRight") {
       this.rightPressed = false;
+      this.shootPressed = true;
     }
     if (event.code == "ArrowLeft") {
       this.leftPressed = false;
-    }
-    if (event.code == "Space") {
-      this.shootPressed = false;
+      this.shootPressed = true;
     }
   };
 }
