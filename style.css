@@ -33,3 +33,8 @@ button {
   font-family: 'Bruno Ace SC', Arial, Helvetica, sans-serif;  
   cursor: pointer;
 }
+
+p {
+  font-size: 20px;
+  font-family: 'Bruno Ace SC', Arial, Helvetica, sans-serif;  
+}

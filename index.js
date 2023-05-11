@@ -1,6 +1,7 @@
 import EnemyController from "./EnemyController.js";
 import Player from "./player.js";
 import BulletController from "./BulletController.js";
+import Score from "./Score.js";
 
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
@@ -11,14 +12,15 @@ canvas.height = window.innerHeight;
 const background = new Image();
 background.src = "images/space.png";
 
-const playerBulletController = new BulletController(canvas, 10, "red", true);
-const enemyBulletController = new BulletController(canvas, 4, "white", false);
+const playerBulletController = new BulletController(canvas, 10, "orange", true);
+const enemyBulletController = new BulletController(canvas, 4, "red", false);
 const enemyController = new EnemyController(
   canvas,
   enemyBulletController,
   playerBulletController
 );
 const player = new Player(canvas, 3, playerBulletController);
+const score = new Score();
 
 let isGameOver = false;
 let didWin = false;
@@ -35,7 +37,7 @@ function game() {
   }
 }
 
-function displayGameOver() {
+function displayGameOver(ctx, canvas) {
   if (isGameOver) {
     // Message fin de partie
     let text = didWin ? "You Win" : "Game Over";
@@ -56,21 +58,24 @@ function displayGameOver() {
       restart.style.left = canvas.width / 2 - 50 + "px";
       document.body.appendChild(restart);
     }
-
-    restart.addEventListener("click", () => {
-      enemyController.enemyRows = [];
-      enemyController.createEnemies();
-      playerBulletController.bullets = [];
-      enemyBulletController.bullets = [];
-
-      isGameOver = false;
-      didWin = false;
-
-      if (restart.parentNode) {
-        restart.parentNode.removeChild(restart);
-      }
-    });
   }
+
+  restart.addEventListener("click", () => {
+    enemyController.enemies = [];
+    enemyController.createEnemies();
+
+    isGameOver = false;
+    didWin = false;
+
+    if (restart.parentNode) {
+      restart.parentNode.removeChild(restart);
+    }
+  });
+
+  // Score
+  this.updateHighScore();
+  this.displayHighScore();
+  this.displayNewHighScore();
 }
 
 function checkGameOver() {
@@ -98,6 +103,7 @@ function lanceur() {
   let audio = new Audio("./sounds/comptesARebours.wav");
   audio.volume = 0.5;
   audio.play();
+
   //compte à rebours
   let count = 3;
 
