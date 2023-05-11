@@ -1,4 +1,4 @@
-*,
+@import url('https://fonts.googleapis.com/css2?family=Bruno+Ace+SC&display=swap');*,
 ::after,
 ::before {
   margin: 0;
@@ -7,16 +7,29 @@
 }
 
 body {
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    height: 100vh;
-    background-color: gray;
-    color: white;
+  font-family: 'Bruno Ace SC', sans-serif;  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+  background: url(./images/space.png);
+  color: white;
 }
 
 canvas {
-    box-shadow: black 20px 10px 50px;
+  box-shadow: black 20px 10px 50px;
+}
+
+button {
+  background-color: gray;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 15px;
+  font-family: 'Bruno Ace SC', Arial, Helvetica, sans-serif;  
+  cursor: pointer;
 }

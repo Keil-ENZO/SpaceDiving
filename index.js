@@ -37,12 +37,39 @@ function game() {
 
 function displayGameOver() {
   if (isGameOver) {
+    // Message fin de partie
     let text = didWin ? "You Win" : "Game Over";
     let textOffset = didWin ? 4 : 6;
 
     ctx.fillStyle = "white";
-    ctx.font = "50px Arial";
+    ctx.font = "40px Bruno Ace SC";
     ctx.fillText(text, canvas.width / textOffset, canvas.height / 2);
+
+    // Bouton restart
+    let restart = document.getElementById("restart-btn");
+    if (!restart) {
+      restart = document.createElement("button");
+      restart.id = "restart-btn";
+      restart.innerText = "Restart";
+      restart.style.position = "absolute";
+      restart.style.top = canvas.height / 2 + 50 + "px";
+      restart.style.left = canvas.width / 2 - 50 + "px";
+      document.body.appendChild(restart);
+    }
+
+    restart.addEventListener("click", () => {
+      enemyController.enemyRows = [];
+      enemyController.createEnemies();
+      playerBulletController.bullets = [];
+      enemyBulletController.bullets = [];
+
+      isGameOver = false;
+      didWin = false;
+
+      if (restart.parentNode) {
+        restart.parentNode.removeChild(restart);
+      }
+    });
   }
 }
 
@@ -65,4 +92,53 @@ function checkGameOver() {
   }
 }
 
-setInterval(game, 1000 / 60);
+//Lancer le compte à rebours avant le début de la partie
+function lanceur() {
+  // Sound comptes à rebours
+  let audio = new Audio("./sounds/comptesARebours.wav");
+  audio.volume = 0.5;
+  audio.play();
+  //compte à rebours
+  let count = 3;
+
+  let interval = setInterval(() => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "white";
+    ctx.font = "50px Bruno Ace SC";
+    ctx.fillText(count, canvas.width / 2, canvas.height / 2);
+    count--;
+    if (count < 0) {
+      clearInterval(interval);
+      setInterval(game, 900 / 60);
+    }
+  }, 1000);
+}
+
+//Lancer le jeu
+function startGame() {
+  // Message de début de partie
+  ctx.fillStyle = "white";
+  ctx.font = "38px Bruno Ace SC";
+  ctx.fillText("SpaceDiving", canvas.width / 6, canvas.height / 2);
+
+  // Bouton start
+  let start = document.getElementById("start-btn");
+  if (!start) {
+    start = document.createElement("button");
+    start.id = "start-btn";
+    start.innerText = "Start";
+    start.style.position = "absolute";
+    start.style.top = canvas.height / 2 + 50 + "px";
+    start.style.left = canvas.width / 2 - 50 + "px";
+    document.body.appendChild(start);
+  }
+
+  // Lancer le compte à rebours au click
+  start.addEventListener("click", () => {
+    lanceur();
+    start.parentNode.removeChild(start);
+  });
+}
+
+startGame();
+
