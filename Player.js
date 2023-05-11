@@ -9,9 +9,9 @@ export default class Player {
     this.bulletController = bulletController;
 
     this.x = this.canvas.width / 2;
-    this.y = this.canvas.height - 75;
-    this.width = 50;
-    this.height = 48;
+    this.y = this.canvas.height - 100;
+    this.width = 110;
+    this.height = 80;
     this.image = new Image();
     this.image.src = "images/player.png";
 
