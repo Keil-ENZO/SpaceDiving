@@ -1,14 +1,24 @@
 import Bullet from "./Bullet.js";
+import Score from "./Score.js";
+
+const scoreObject = new Score();
 
 export default class BulletController {
   bullets = [];
   timeTillNextBulletAllowed = 0;
 
-  constructor(canvas, maxBulletsAtATime, bulletColor, soundEnabled) {
+  constructor(
+    canvas,
+    maxBulletsAtATime,
+    bulletColor,
+    soundEnabled,
+    scoreObject
+  ) {
     this.canvas = canvas;
     this.maxBulletsAtATime = maxBulletsAtATime;
     this.bulletColor = bulletColor;
     this.soundEnabled = soundEnabled;
+    this.scoreObject = scoreObject;
 
     this.shootSound = new Audio("sounds/shoot.wav");
     this.shootSound.volume = 0.1;
@@ -32,6 +42,9 @@ export default class BulletController {
 
     if (bulletThatHitSpriteIndex >= 0) {
       this.bullets.splice(bulletThatHitSpriteIndex, 1);
+      if (this.scoreObject) {
+        this.scoreObject.incrementScore();
+      }
       return true;
     }
 

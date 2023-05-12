@@ -1,10 +1,11 @@
 import EnemyController from "./EnemyController.js";
-import Player from "./player.js";
+import Player from "./Player.js";
 import BulletController from "./BulletController.js";
-// import Score from "./Score.js";
+import Score from "./Score.js";
 
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
+const score = new Score();
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
@@ -12,7 +13,13 @@ canvas.height = window.innerHeight;
 const background = new Image();
 background.src = "images/space.png";
 
-const playerBulletController = new BulletController(canvas, 10, "orange", true);
+const playerBulletController = new BulletController(
+  canvas,
+  10,
+  "orange",
+  true,
+  score
+);
 const enemyBulletController = new BulletController(canvas, 4, "red", false);
 const enemyController = new EnemyController(
   canvas,
@@ -71,11 +78,6 @@ function displayGameOver() {
         restart.parentNode.removeChild(restart);
       }
     });
-
-    // Score
-    // score.updateHighScore();
-    // score.displayHighScore();
-    // score.displayNewHighScore();
   }
 }
 
