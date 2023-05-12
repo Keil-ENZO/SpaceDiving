@@ -10,7 +10,7 @@ export default class Player {
 
     this.x = this.canvas.width / 2;
     this.y = this.canvas.height - 100;
-    this.width = 110;
+    this.width = 60;
     this.height = 80;
     this.image = new Image();
     this.image.src = "images/player.png";
