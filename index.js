@@ -5,7 +5,6 @@ import Score from "./Score.js";
 
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
-const score = new Score();
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
@@ -13,20 +12,21 @@ canvas.height = window.innerHeight;
 const background = new Image();
 background.src = "images/space.png";
 
-const playerBulletController = new BulletController(
-  canvas,
-  10,
-  "orange",
-  true,
-  score
-);
+const scoreObject = new Score(); // Assurez-vous d'initialiser l'objet scoreObject
+const playerBulletController = new BulletController(canvas, 10, "orange", true);
 const enemyBulletController = new BulletController(canvas, 4, "red", false);
+
 const enemyController = new EnemyController(
   canvas,
   enemyBulletController,
-  playerBulletController
+  playerBulletController,
+  scoreObject
 );
 const player = new Player(canvas, 3, playerBulletController);
+
+playerBulletController.setScoreObject(scoreObject);
+enemyBulletController.setScoreObject(scoreObject);
+enemyController.setScoreObject(scoreObject);
 
 let isGameOver = false;
 let didWin = false;
@@ -40,6 +40,13 @@ function game() {
     player.draw(ctx);
     playerBulletController.draw(ctx);
     enemyBulletController.draw(ctx);
+
+    // score en haut à gauche
+    ctx.fillStyle = "white";
+    ctx.font = "20px Bruno Ace SC";
+
+    let scoreText = "Score: " + scoreObject.score; // Utilisation de la variable score
+    ctx.fillText(scoreText, 10, 30);
   }
 }
 
@@ -78,6 +85,12 @@ function displayGameOver() {
         restart.parentNode.removeChild(restart);
       }
     });
+
+    // Score
+    ctx.fillStyle = "white";
+    ctx.font = "20px Bruno Ace SC";
+    let scoreText = "Score: " + scoreObject.score; // Utilisation de la variable score
+    ctx.fillText(scoreText, canvas.width / 2, canvas.height / 2 + 200);
   }
 }
 

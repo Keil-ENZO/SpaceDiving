@@ -1,27 +1,21 @@
 import Bullet from "./Bullet.js";
-import Score from "./Score.js";
-
-const scoreObject = new Score();
 
 export default class BulletController {
   bullets = [];
   timeTillNextBulletAllowed = 0;
 
-  constructor(
-    canvas,
-    maxBulletsAtATime,
-    bulletColor,
-    soundEnabled,
-    scoreObject
-  ) {
+  constructor(canvas, maxBulletsAtATime, bulletColor, soundEnabled) {
     this.canvas = canvas;
     this.maxBulletsAtATime = maxBulletsAtATime;
     this.bulletColor = bulletColor;
     this.soundEnabled = soundEnabled;
-    this.scoreObject = scoreObject;
 
     this.shootSound = new Audio("sounds/shoot.wav");
     this.shootSound.volume = 0.1;
+  }
+
+  setScoreObject(scoreObject) {
+    this.scoreObject = scoreObject;
   }
 
   draw(ctx) {
@@ -35,16 +29,36 @@ export default class BulletController {
     }
   }
 
+  incrementScore() {
+    if (this.scoreObject) {
+      this.scoreObject.incrementScore();
+
+      if (this.scoreObject.getScore() % 100 === 0) {
+        this.maxBulletsAtATime++;
+      }
+
+      if (this.scoreObject.getScore() % 200 === 0) {
+        this.bulletColor = "red";
+      }
+
+      if (this.scoreObject.getScore() % 300 === 0) {
+        this.bulletColor = "yellow";
+      }
+
+      if (this.scoreObject.getScore() % 400 === 0) {
+        this.bulletColor = "green";
+      }
+    }
+  }
+
   collideWith(sprite) {
     const bulletThatHitSpriteIndex = this.bullets.findIndex((bullet) =>
       bullet.collideWith(sprite)
     );
 
-    if (bulletThatHitSpriteIndex >= 0) {
+    if (bulletThatHitSpriteIndex > -1) {
       this.bullets.splice(bulletThatHitSpriteIndex, 1);
-      if (this.scoreObject) {
-        this.scoreObject.incrementScore();
-      }
+      this.incrementScore();
       return true;
     }
 

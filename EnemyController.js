@@ -35,6 +35,10 @@ export default class EnemyController {
     this.createEnemies();
   }
 
+  setScoreObject(scoreObject) {
+    this.enemyBulletController.setScoreObject(scoreObject);
+  }
+
   draw(ctx) {
     this.decrementMoveDownTimer();
     this.updateVelocityAndDirection();

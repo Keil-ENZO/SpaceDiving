@@ -1,19 +1,5 @@
 export default class Score {
-  constructor(score = 0) {
-    this.score = score;
-  }
-
-  draw(ctx) {
-    ctx.font = "20px Arial";
-    ctx.fillStyle = "white";
-    ctx.fillText(`Score: ${this.score}`, 20, 30);
-  }
-
-  incrementScore() {
-    this.score += 10;
-  }
-
-  resetScore() {
+  constructor() {
     this.score = 0;
   }
 
@@ -21,7 +7,8 @@ export default class Score {
     return this.score;
   }
 
-  setScore(score) {
-    this.score = score;
+  incrementScore() {
+    this.score += 1;
   }
 }
+  
