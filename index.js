@@ -101,15 +101,27 @@ function checkGameOver() {
 
   if (enemyBulletController.collideWith(player)) {
     isGameOver = true;
+    // Sound Game Over
+    let audio = new Audio("./sounds/explosion.wav");
+    audio.volume = 0.5;
+    audio.play();
   }
 
   if (enemyController.collideWith(player)) {
     isGameOver = true;
+    // Sound Game Over
+    let audio = new Audio("./sounds/explosion.wav");
+    audio.volume = 0.5;
+    audio.play();
   }
 
   if (enemyController.enemyRows.length === 0) {
     didWin = true;
     isGameOver = true;
+    // Sound Win
+    let audio = new Audio("./sounds/win.wav");
+    audio.volume = 0.2;
+    audio.play();
   }
 }
 

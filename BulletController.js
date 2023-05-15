@@ -36,18 +36,29 @@ export default class BulletController {
 
       if (this.scoreObject.getScore() % 100 === 0) {
         this.bulletColor = "purple";
+        this.shootSound.pause();
+        this.shootSound = new Audio("sounds/shoot1.wav");
       }
 
       if (this.scoreObject.getScore() % 200 === 0) {
         this.bulletColor = "yellow";
+        this.shootSound.pause();
+        this.shootSound = new Audio("sounds/shoot2.wav");
+        this.shootSound.volume = 0.06;
       }
 
       if (this.scoreObject.getScore() % 300 === 0) {
         this.bulletColor = "green";
+        this.shootSound.pause();
+        this.shootSound = new Audio("sounds/shoot3.wav");
+        this.shootSound.volume = 0.1;
       }
 
       if (this.scoreObject.getScore() % 500 === 0) {
         this.bulletColor = "blue";
+        this.shootSound.pause();
+        this.shootSound = new Audio("sounds/shoot.wav");
+        this.shootSound.volume = 0.1;
       }
     }
   }
