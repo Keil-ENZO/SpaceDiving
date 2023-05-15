@@ -8,7 +8,7 @@ export default class Score {
   }
 
   incrementScore() {
-    this.score += 1;
+    this.score += 10;
   }
 }
   

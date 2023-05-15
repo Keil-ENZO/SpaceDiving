@@ -15,7 +15,8 @@ body {
   flex-direction: column;
   height: 100vh;
   background: url(./images/space.png);
-  color: white;
+  color: black;
+  overflow: hidden;
 }
 
 canvas {

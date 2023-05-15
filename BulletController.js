@@ -33,20 +33,21 @@ export default class BulletController {
     if (this.scoreObject) {
       this.scoreObject.incrementScore();
 
+
       if (this.scoreObject.getScore() % 100 === 0) {
-        this.maxBulletsAtATime++;
+        this.bulletColor = "purple";
       }
 
       if (this.scoreObject.getScore() % 200 === 0) {
-        this.bulletColor = "red";
-      }
-
-      if (this.scoreObject.getScore() % 300 === 0) {
         this.bulletColor = "yellow";
       }
 
-      if (this.scoreObject.getScore() % 400 === 0) {
+      if (this.scoreObject.getScore() % 300 === 0) {
         this.bulletColor = "green";
+      }
+
+      if (this.scoreObject.getScore() % 500 === 0) {
+        this.bulletColor = "blue";
       }
     }
   }

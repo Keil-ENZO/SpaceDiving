@@ -12,7 +12,7 @@ canvas.height = window.innerHeight;
 const background = new Image();
 background.src = "images/space.png";
 
-const scoreObject = new Score(); // Assurez-vous d'initialiser l'objet scoreObject
+const scoreObject = new Score();
 const playerBulletController = new BulletController(canvas, 10, "orange", true);
 const enemyBulletController = new BulletController(canvas, 4, "red", false);
 
@@ -44,8 +44,7 @@ function game() {
     // score en haut à gauche
     ctx.fillStyle = "white";
     ctx.font = "20px Bruno Ace SC";
-
-    let scoreText = "Score: " + scoreObject.score; // Utilisation de la variable score
+    let scoreText = "Score: " + scoreObject.score;
     ctx.fillText(scoreText, 10, 30);
   }
 }
@@ -77,6 +76,7 @@ function displayGameOver() {
       enemyController.createEnemies();
       playerBulletController.bullets = [];
       enemyBulletController.bullets = [];
+      scoreObject.score = 0;
 
       isGameOver = false;
       didWin = false;
@@ -86,11 +86,11 @@ function displayGameOver() {
       }
     });
 
-    // Score
+    // Score au milue de l'écran
     ctx.fillStyle = "white";
     ctx.font = "20px Bruno Ace SC";
-    let scoreText = "Score: " + scoreObject.score; // Utilisation de la variable score
-    ctx.fillText(scoreText, canvas.width / 2, canvas.height / 2 + 200);
+    let scoreText = "Score: " + scoreObject.score;
+    ctx.fillText(scoreText, canvas.width / 2 - 50, canvas.height / 2 + 200);
   }
 }
 
