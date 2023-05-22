@@ -8,6 +8,8 @@ export default class Player {
     this.velocity = velocity;
     this.bulletController = bulletController;
 
+    this.viewX = this.canvas.width / 2;
+
     this.x = this.canvas.width / 2;
     this.y = this.canvas.height - 100;
     this.width = 60;
@@ -28,6 +30,7 @@ export default class Player {
     ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
   }
 
+  // Collisions
   collideWithWalls() {
     //left
     if (this.x < 0) {
@@ -43,9 +46,22 @@ export default class Player {
   move() {
     if (this.rightPressed) {
       this.x += this.velocity;
+      this.viewX = this.x;
+      space_x = this.x;
     } else if (this.leftPressed) {
       this.x += -this.velocity;
+      this.viewX = this.x;
+      space_x = this.x;
+    } else if (space_x < this.viewX) {
+      space_x = space_x + 3;
+      this.x = space_x;
     }
+    if (space_x > this.viewX) {
+      space_x = space_x - 3;
+      this.x = space_x;
+    }
+
+    space_x = Math.round(space_x);
   }
 
   keydown = (event) => {
@@ -70,3 +86,5 @@ export default class Player {
     }
   };
 }
+
+let space_x = window.innerWidth / 2;

@@ -14,7 +14,7 @@ body {
   align-items: center;
   flex-direction: column;
   height: 100vh;
-  background: url(./images/space.png);
+  background: url(../images/space.png);
   color: black;
   overflow: hidden;
 }

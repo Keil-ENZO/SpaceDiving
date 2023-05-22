@@ -33,7 +33,6 @@ export default class BulletController {
     if (this.scoreObject) {
       this.scoreObject.incrementScore();
 
-
       if (this.scoreObject.getScore() % 100 === 0) {
         this.bulletColor = "purple";
         this.shootSound.pause();

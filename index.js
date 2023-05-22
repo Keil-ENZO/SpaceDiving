@@ -1,7 +1,7 @@
-import EnemyController from "./EnemyController.js";
-import Player from "./Player.js";
-import BulletController from "./BulletController.js";
-import Score from "./Score.js";
+import EnemyController from "./src/EnemyController.js";
+import Player from "./src/Player.js";
+import BulletController from "./src/BulletController.js";
+import Score from "./src/Score.js";
 
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
@@ -23,6 +23,30 @@ const enemyController = new EnemyController(
   scoreObject
 );
 const player = new Player(canvas, 3, playerBulletController);
+
+// Controle tactile
+let touchHandler = function (event) {
+  player.shootPressed = true;
+  if (event.touches && event.touches[0]) {
+    player.viewX = event.touches[0].clientX;
+  } else if (event.originalEvent && event.originalEvent.changedTouches[0]) {
+    player.viewX = event.originalEvent.changedTouches[0].clientX;
+  } else if (event.clientX && event.clientY) {
+    player.viewX = event.clientX;
+  }
+
+  player.viewX = Math.round(player.viewX);
+
+  if (player.viewX < 0) {
+    player.viewX = 0;
+  }
+  if (player.viewX > canvas.width) {
+    player.viewX = canvas.width;
+  }
+};
+
+window.addEventListener("touchstart", touchHandler, false);
+window.addEventListener("touchmove", touchHandler, false);
 
 playerBulletController.setScoreObject(scoreObject);
 enemyBulletController.setScoreObject(scoreObject);
@@ -53,11 +77,11 @@ function displayGameOver() {
   if (isGameOver) {
     // Message fin de partie
     let text = didWin ? "You Win" : "Game Over";
-    let textOffset = didWin ? 4 : 6;
 
     ctx.fillStyle = "white";
     ctx.font = "40px Bruno Ace SC";
-    ctx.fillText(text, canvas.width / textOffset, canvas.height / 2);
+    let textWidth = ctx.measureText(text).width;
+    ctx.fillText(text, canvas.width / 2 - textWidth / 2, canvas.height / 2);
 
     // Bouton restart
     let restart = document.getElementById("restart-btn");
@@ -67,7 +91,7 @@ function displayGameOver() {
       restart.innerText = "Restart";
       restart.style.position = "absolute";
       restart.style.top = canvas.height / 2 + 50 + "px";
-      restart.style.left = canvas.width / 2 - 50 + "px";
+      restart.style.left = canvas.width / 2 - 60 + "px";
       document.body.appendChild(restart);
     }
 
@@ -77,6 +101,7 @@ function displayGameOver() {
       playerBulletController.bullets = [];
       enemyBulletController.bullets = [];
       scoreObject.score = 0;
+      playerBulletController.bulletColor = "orange";
 
       isGameOver = false;
       didWin = false;
@@ -90,7 +115,7 @@ function displayGameOver() {
     ctx.fillStyle = "white";
     ctx.font = "20px Bruno Ace SC";
     let scoreText = "Score: " + scoreObject.score;
-    ctx.fillText(scoreText, canvas.width / 2 - 50, canvas.height / 2 + 200);
+    ctx.fillText(scoreText, canvas.width / 2 - 50, canvas.height / 2 + 160);
   }
 }
 
@@ -132,7 +157,6 @@ function lanceur() {
   audio.volume = 0.5;
   audio.play();
 
-  //compte à rebours
   let count = 3;
 
   let interval = setInterval(() => {
@@ -175,4 +199,3 @@ function startGame() {
 }
 
 startGame();
-
