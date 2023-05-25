@@ -110,6 +110,7 @@ function displayGameOver() {
         restart.parentNode.removeChild(restart);
       }
     });
+    //wwww
 
     // Score au milue de l'écran
     ctx.fillStyle = "white";
